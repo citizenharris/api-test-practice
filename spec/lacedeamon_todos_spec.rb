@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-describe 'CRUD' do
+describe 'Lacedeamon API' do
 url = 'http://lacedeamon.spartaglobal.com/todos'
   
   it 'should read the api and return a JSON' do
@@ -46,5 +46,15 @@ url = 'http://lacedeamon.spartaglobal.com/todos'
     rp = JSON.parse(rp.body)
     expect(rp['title']).to eq 'wax moustache fiercely'
   end
+
+  it 'should edit a todo' do
+    rp = HTTParty.post(url, query: {title: 'oil beard', due: '2987-09-09'})
+    rp = JSON.parse(rp.body)
+    rp = rp['id']
+    rp = HTTParty.patch("http://lacedeamon.spartaglobal.com/todos/#{rp}", query: {title: 'oil beard fiercely'})
+    rp = JSON.parse(rp.body)
+    expect(rp['title']).to eq 'oil beard fiercely'
+  end
+
 end
 

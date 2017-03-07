@@ -1,5 +1,3 @@
-require 'lacedeamon_todos_spec.rb'
-
 RSpec.configure do |config|
   
   config.expect_with :rspec do |expectations|

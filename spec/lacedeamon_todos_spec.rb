@@ -56,5 +56,19 @@ url = 'http://lacedeamon.spartaglobal.com/todos'
     expect(rp['title']).to eq 'oil beard fiercely'
   end
 
+  it 'should not accept a word as a valid date format' do
+    response = HTTParty.post(url, query: {title: 'wax moustache', due: 'bananarama'})
+    expect(response.code).to eq 500
+  end
+
+  it 'should not accept American date format as a valid date format' do
+    response = HTTParty.post(url, query: {title: 'wax moustache', due: '12-24-1978'})
+    expect(response.code).to eq 500
+
+  it 'should only accept a variant of yyyy-mm-dd as a valid date format' do
+    response = HTTParty.post(url, query: {title: 'wax moustache', due: '99-09-09'})
+    expect(response.code).to eq 405
+  end
+  end
 end
 
